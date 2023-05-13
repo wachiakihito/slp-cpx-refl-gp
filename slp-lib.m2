@@ -140,7 +140,7 @@ modpOf = (I, p) -> (
 -- If the Hilbert function of Rmodp / Imodp2 is not equal to
 -- that of R/I then this function generates an error.
 modpOf2 = (I, p) -> (
-  if (not isPrime p) then ( error "[modpOf] not prime" );
+  if (not isPrime p) then ( error "[modpOf2] not prime" );
   R := ring I;
   R2Z := map(ZZ, R);
   Rmodp := (ZZ/p)[gens R];
