@@ -58,7 +58,7 @@ I set up "Debian GNU/Linux 11 (bullseye)" on a virtual machine,
 assigned 6GB memory,
 and installed Macaulay2 using the Synaptic package manager.
 
-The programs take the following time to return the result.
+The programs take the following time to return the results.
 If *mod* is written, the time is by programs over a finite field.
 For example,
 No. 29 takes 4min35sec over the rational number field,
