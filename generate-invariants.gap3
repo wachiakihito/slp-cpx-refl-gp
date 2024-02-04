@@ -1,0 +1,42 @@
+# Generate files of M2 code of the basic invariants 
+# for G24, G25, G26, G27, G29, G31, G32, G33.
+# def-24.m2 etc. will be generated.
+
+# usage:
+# $ cat generate-invariants.gap3 | gap -q
+
+tmpfilename := "def-tmp.txt";;
+
+generateDefinitionM2 := function(no)
+  local G, rank, vs, fs, i, filename, cmd;
+
+  filename := SPrint("def-", no, ".m2");
+  G := ComplexReflectionGroup(no);
+  rank := ReflectionType(G)[1].rank;
+  vs := List([1..rank], i -> Mvp(SPrint("x", i)));
+  fs := Invariants(G);
+
+  # print to file
+  PrintTo(tmpfilename, "-- G", no, "\n");
+  AppendTo(tmpfilename, "R = QQ", vs, ";\n");
+  AppendTo(tmpfilename, "fs = {", "\n");
+  #
+  for i in [1..rank] do
+    AppendTo(tmpfilename, FormatMaple(ApplyFunc(fs[i], vs)));
+    if i < rank then
+      AppendTo(tmpfilename, ",");
+    fi;
+    AppendTo(tmpfilename, "\n");
+  od;
+  #
+  AppendTo(tmpfilename, "};", "\n");
+
+  # concatnate folded lines
+  cmd := SPrint("cat ", tmpfilename," | perl -p -e 's/\\\\\n//g' > ", filename);
+  Exec(cmd);
+end;;
+
+# main
+for no in [24, 25, 26, 27, 29, 31, 32, 33] do
+  generateDefinitionM2(no);
+od;;
