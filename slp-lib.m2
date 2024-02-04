@@ -45,6 +45,17 @@
 -- In this setting, R/I has the SLP if Rmodp/Imodp has the SLP
 -- (Converse is not true).
 
+
+-- Clear fractions of a polynomial
+clearFraction = f -> (
+  R := ring f;
+  R2Q := map(QQ, R);
+  cs := flatten entries last coefficients f;
+  a := lcm apply(cs, c -> denominator R2Q c);
+  b := gcd apply(cs, c -> numerator R2Q c);
+  f * (a/b)
+)
+
 -- Hilbert function of graded Artinian ring R/I
 hilb = I -> (
   flatten entries last coefficients numerator reduceHilbert hilbertSeries I
